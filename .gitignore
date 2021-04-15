@@ -1,0 +1,17 @@
+*
+!*/
+!.gitignore
+
+!*.v
+!*.sv
+!*.vhd
+
+!*.png
+
+delta-sigma/vivado_proj/
+
+# !/delta-sigma/
+# !/delta-sigma/rtl/
+# !/delta-sigma/rtl/*.v
+# !/delta-sigma/tb/
+# !/delta-sigma/tb/*.v

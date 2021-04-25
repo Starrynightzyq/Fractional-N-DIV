@@ -28,7 +28,7 @@ begin
 end
 
 p_counter #(
-    .P_WIDTH ( P_WIDTH ))
+    .WIDTH ( P_WIDTH ))
 u_p_counter (
     .rst_n                   ( rst_n             ),
     .Fin                     ( Fin               ),

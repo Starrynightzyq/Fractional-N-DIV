@@ -1,5 +1,6 @@
 `timescale  1ns / 1ps
 
+// 将分频的整数部分和 Sigma-Delta 调制器的结果相加，将结果分成两部分分别送到 P 计数器和 S 计数器
 module calculate_ps #(
     parameter P_WIDTH = 5,
     parameter S_WIDTH = 3,
@@ -8,10 +9,9 @@ module calculate_ps #(
     input wire clk,
     input wire rst_n,
 
-    input wire [INT_WIDTH-1:0] Integer,
-    // input wire [FRAC_WIDTH-1:0] Fraction,
+    input wire [INT_WIDTH-1:0] Integer,  // 整数输入
 
-    input wire [3:0] delta_sigma,
+    input wire [3:0] delta_sigma,        // Sigma-Delta 调制器的结果
 
     output wire [S_WIDTH-1:0] Si,
     output wire [P_WIDTH-1:0] Pi

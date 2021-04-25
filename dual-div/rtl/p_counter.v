@@ -23,6 +23,7 @@ module p_counter #(
     wire [WIDTH-1:0] Pi_correct;
 
     // Generate block
+    // 例化 5 个 D 触发器
     genvar i;
     generate
         for(i=0; i<WIDTH; i=i+1) begin:BLOCK1
@@ -35,7 +36,6 @@ module p_counter #(
                 .Q                       ( q_o[i]     ),
                 .Qn                      ( qn_o[i]    )
             );
-            // buffer_1 buffer_1_1(.in(din[i]), .out(dout[i]));
         end
     endgenerate
 
@@ -49,6 +49,7 @@ module p_counter #(
         .Qn                      (     )
     );
 
+    // 这部分的原理见 “A 37 GHz wide-band programmable divide-by-N frequency divider”
     assign Pi_correct = Pi - 1'b1;
     assign d_i = qn_o;
     assign clk_i[0] = Fin;

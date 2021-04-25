@@ -3,7 +3,7 @@
 module div_89 (
     input clk,
     input rst_n,
-    input MC,
+    input MC,    // MC = 0 时，8分频；MC = 1 时，9分频
 
     output f45,
     output f89
@@ -22,18 +22,16 @@ module div_89 (
     wire Q4;
     wire Qn4;
 
+    // 这部分原理见 8/9 分频器的结构图
     assign D1 = ~(Q2 & Q3);
     assign D2 = Q1;
     assign D3 = ~(Qn2 & (Qn4 & MC));
     assign D4 = Qn4;
 
-    assign f89 = Qn4;
-    assign f45 = Qn1;
+    assign f89 = Qn4; // 异步 8/9 分频
+    assign f45 = Qn1; // 同步 4/5 分频
 
-    // initial begin
-    //     Qn4 = 1'b1;
-    // end
-
+    // D 触发器
     reg_sync #(
         .WIDTH ( 1 ))
     u1_reg_sync (

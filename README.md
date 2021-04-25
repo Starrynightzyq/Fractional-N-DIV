@@ -1,11 +1,12 @@
 # Fractional-N-DIV
 A Fractional Divider with Delta-Sigma Modulator and Dual-Mode Divider for Phase-Locked Loop.
 
-![top](test_res/delta-sigma-div.png)
+![top](pic/test_res/delta-sigma-div.png)
 
 ## Tree
 
 ~~~bash
+.
 ├── delta-sigma            # delta-sigma
 │   ├── rtl                # verilog 代码
 │   ├── tb                 # testbench
@@ -15,6 +16,10 @@ A Fractional Divider with Delta-Sigma Modulator and Dual-Mode Divider for Phase-
 ├── FractionalN            # top
 │   ├── rtl
 │   └── tb
+├── pic
+│   ├── diagram            # 系统框图
+│   ├── test_res           # 仿真测试结果
+│   └── wave               # 波形图
 ├── doc
-└── test_res               # 仿真测试结果
+└── README.md
 ~~~

@@ -15,6 +15,7 @@ reg   rst_n                                = 0 ;
 reg   [INT_WIDTH-1:0]  Integer             = 0 ;
 reg   [FRAC_WIDTH-1:0]  Fraction           = 0 ;
 reg clk=0;
+reg clk_div=0;
 
 // fractionaln Outputs
 wire  Fout                                 ;
@@ -23,6 +24,11 @@ wire  Fout                                 ;
 initial
 begin
     forever #(PERIOD/2)  clk=~clk;
+end
+
+initial
+begin
+    forever #(PERIOD*120.5/2)  clk_div=~clk_div;
 end
 
 initial
@@ -46,24 +52,28 @@ fractionaln #(
 
 initial
 begin
-    Integer = 8'd132;
+    Integer = 8'd120;
     Fraction = 24'd8388607; // 2^23 - 1 (0.5)
-    #(PERIOD*132*10000);
+    #(PERIOD*120*10000);
     $finish;
 end
 
 integer dout_file;
 initial begin
-    dout_file=$fopen("/home/EDA/vsim/mash/tb/data.txt");    //打开所创建的文件
+    dout_file=$fopen("/home/EDA/vsim/Fractional-N-DIV/delta-sigma/tb/data.txt");    //打开所创建的文件
     if(dout_file == 0)begin 
         $display ("can not open the file!");    //创建文件失败，显示can not open the file!
         $stop;
     end
 end
 
-always @(posedge clk) begin
-    // $fdisplay(dout_file,"%d",$signed(Fout));    //保存有符号数据
-    $fdisplay(dout_file,"%b",Fout);    //使能信号有效，每来一个时钟，写入到所创建的文件中
+always @(posedge u_fractionaln.u_mash111.clk) begin
+    $fdisplay(dout_file,"%d",$signed(u_fractionaln.u_mash111.y_o));    //保存有符号数据
 end   
+// always @(posedge u_fractionaln.u_mash111.clk) begin
+//     $fdisplay(dout_file,"%b",Fout);    //使能信号有效，每来一个时钟，写入到所创建的文件中
+// end   
+
+// /tb_fractionaln/u_fractionaln/u_mash111/y_o
 
 endmodule

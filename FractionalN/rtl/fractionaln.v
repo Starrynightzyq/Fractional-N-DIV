@@ -1,18 +1,19 @@
 `timescale  1ns / 1ps
 
+// 整个小数分频器的顶层模块，包含 mash111-Sigma-Delta 调制器，双模分频器
 module fractionaln #(
-    parameter P_WIDTH = 5,
-    parameter S_WIDTH = 3,
-    parameter INT_WIDTH = 8,
-    parameter FRAC_WIDTH = 24
+    parameter P_WIDTH = 5,                  // P 计数器的位宽
+    parameter S_WIDTH = 3,                  // S 计数器的位宽
+    parameter INT_WIDTH = 8,                // 分频整数的位宽
+    parameter FRAC_WIDTH = 24               // 分频小数的位宽
 ) (
-    input wire Fin,
-    input wire rst_n,
+    input wire Fin,                         // 分频器的时钟输入
+    input wire rst_n,                       // 复位信号，低有效
 
-    input wire [INT_WIDTH-1:0] Integer,
-    input wire [FRAC_WIDTH-1:0] Fraction,
+    input wire [INT_WIDTH-1:0] Integer,     // 分频整数部分
+    input wire [FRAC_WIDTH-1:0] Fraction,   // 分频小数部分
 
-    output wire Fout
+    output wire Fout                        // 分频输出
 );
 
     wire [3:0] delta_sigma;
@@ -22,6 +23,7 @@ module fractionaln #(
 
     assign clk_delta_sigma = Fout;
 
+    // Sigma-Delta 调制器
     mash111 #(
         .WIDTH  ( FRAC_WIDTH ),
         .A_GAIN ( 1  ))
@@ -34,6 +36,7 @@ module fractionaln #(
         .e_o                     (                 )
     );
 
+    // 将分频的整数部分和 Sigma-Delta 调制器的结果相加，将结果分成两部分分别送到 P 计数器和 S 计数器
     calculate_ps #(
         .P_WIDTH   ( P_WIDTH ),
         .S_WIDTH   ( S_WIDTH ),
@@ -47,6 +50,7 @@ module fractionaln #(
         .Pi                      ( Pi              )
     );
     
+    // P/S 双模分频器
     dual_div #(
         .P_WIDTH ( P_WIDTH ),
         .S_WIDTH ( S_WIDTH ))

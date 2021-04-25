@@ -22,6 +22,7 @@ module s_counter #(
     wire mc_q;
 
     // Generate block
+    // 例化 3 个 D 触发器
     genvar i;
     generate
         for(i=0; i<WIDTH; i=i+1) begin:BLOCK1
@@ -48,6 +49,7 @@ module s_counter #(
         .Qn                      (     )
     );
 
+    // 这部分的原理见 “A 37 GHz wide-band programmable divide-by-N frequency divider”
     assign d_i = qn_o;
     assign h_and = &qn_o;
     assign clk_i[0] = ~((~h_and)&(~Fin));

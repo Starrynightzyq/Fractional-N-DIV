@@ -1,15 +1,16 @@
 `timescale  1ns / 1ps
 
+// P/S 双模分频器
 module dual_div #(
     parameter P_WIDTH = 5,
     parameter S_WIDTH = 3
 ) (
-    input wire clk,
-    input wire rst_n,
-    input wire [S_WIDTH-1:0] Si,
-    input wire [P_WIDTH-1:0] Pi,
+    input wire clk,              // 时钟输入
+    input wire rst_n,            // 复位信号，低有效
+    input wire [S_WIDTH-1:0] Si, // S 计数器的最大值
+    input wire [P_WIDTH-1:0] Pi, // P 计数器的最大值
 
-    output wire Fdiv
+    output wire Fdiv             // 分频输出
 );
 
     wire  f89;
